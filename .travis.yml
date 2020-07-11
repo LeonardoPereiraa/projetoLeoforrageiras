@@ -38,6 +38,8 @@ matrix:
     script:
     - ls
     - cd forrageiras
+    - flutter clean
+    - flutter get packages
     - flutter build appbundle
     - cd android
     - gem install fastlane -NV
