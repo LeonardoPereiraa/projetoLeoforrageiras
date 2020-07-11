@@ -1,0 +1,52 @@
+matrix:
+  include:
+  - os: linux
+    language: android
+    dist: trusty
+    licenses:
+    - android-sdk-preview-license-.+
+    - android-sdk-license-.+
+    - google-gdk-license-.+
+    android:
+      components:
+      - tools
+      - platform-tools
+      - build-tools-28.0.3
+      - android-28
+      - sys-img-armeabi-v7a-google_apis-28
+      - extra-android-m2repository
+      - extra-google-m2repository
+      - extra-google-android-support
+    jdk: oraclejdk8
+    sudo: true
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        packages:
+        - libstdc++6
+        - fonts-droid
+    before_script:
+    - ls
+    - cd ./ttttestet/android
+    - ls
+    - cd ..
+    - cd ..
+    - yes | sdkmanager --update
+    - ls -la
+    - chmod +x .
+    script:
+    - ls
+    - cd ttttestet
+    - flutter build appbundle
+    - cd android
+    - gem install fastlane -NV
+    - fastlane supply --aab ./../build/app/outputs/bundle/release/app-release.aab
+install:
+- git clone -b 'v1.12.13+hotfix.8' --depth 1 https://github.com/flutter/flutter.git
+- export PATH="$PATH:`pwd`/flutter/bin"
+cache:
+  directories:
+  - "$HOME/.pub-cache"
+before_install:
+
