@@ -64,7 +64,7 @@ class _CalcularState extends State<Calcular> {
                   width: 200,
                   height: 50,
                   child:Center(
-                    child:Text("calculadora",
+                    child:Text("Calcular",
                       style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
