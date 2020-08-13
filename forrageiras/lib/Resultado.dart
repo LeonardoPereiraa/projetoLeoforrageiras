@@ -34,15 +34,25 @@ class _ResultadoState extends State<Resultado> {
     
     return Scaffold(
       appBar: AppBar(
+         backgroundColor: Colors.blue[700],
+         
         
-        title: Text(widget.title),
+        title: Text(widget.title,),
       ),
+      backgroundColor: Colors.blue[800],
       body: Center(
         
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(widget.resultado)
+            Text("Cultivo de \n"+ widget.resultado, 
+            style: TextStyle(
+                      fontSize: 30,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+            
+            )
             
             
           ],

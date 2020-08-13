@@ -17,18 +17,31 @@ class SistemaCombobox {
   }
   @override
   Widget menuDropdonw() {
-    return Column(children: <Widget>[
+    return Container(
+      margin: EdgeInsets.only(
+                    left: 0, top: 20.0, right: 0.0, bottom: 0.0),
+      //color: Colors.blue[200],
+      child:Column(children: <Widget>[
       Container(
         alignment: Alignment.topLeft,
-        child:Text(this.nomeCombobox)
+        child:Text(this.nomeCombobox,
+         style: TextStyle(
+                    color: Colors.white,
+                    ),
+          
+        )
       ),
-      DropdownButton(
+    
+    
+    DropdownButton(
+        iconDisabledColor: Colors.blue,
         isExpanded: true,
         value: currentCity,
         items: _dropDownMenuItems,
         onChanged: changedDropDownItem,
       )
-    ]);
+    
+    ]));
   }
 
   void changedDropDownItem(Forragueira selectedForragueira) {
@@ -39,7 +52,9 @@ class SistemaCombobox {
     List<DropdownMenuItem<Forragueira>> items = new List();
     for (int i = 0; i < this.forraguera.length; i++) {
       items.add(new DropdownMenuItem(
-          value: forraguera[i], child: new Text(forraguera[i].tipo)));
+          value: forraguera[i], child: new Text(forraguera[i].tipo,style: TextStyle(
+                    color: Colors.white,
+                    ),)));
     }
     return items;
   }
