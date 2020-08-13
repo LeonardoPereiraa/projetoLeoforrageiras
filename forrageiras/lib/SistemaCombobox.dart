@@ -22,7 +22,8 @@ class SistemaCombobox {
                     left: 0, top: 20.0, right: 0.0, bottom: 0.0),
       //color: Colors.blue[200],
       child:Column(children: <Widget>[
-      Container(
+      Container(margin:EdgeInsets.only(
+                    left: 0.0, top: 0.0, right: 0.0, bottom: 10.0),
         alignment: Alignment.topLeft,
         child:Text(this.nomeCombobox,
          style: TextStyle(
