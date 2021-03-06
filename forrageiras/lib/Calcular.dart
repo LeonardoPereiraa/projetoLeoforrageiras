@@ -19,15 +19,22 @@ class _CalcularState extends State<Calcular> {
   }
 
   void _resetestado() {
+    if(!this.manageCombobox.manageCombo.aguardarCarregamento){
     setState(() {
+     
       this.manageCombobox.manageCombo.SReset();
-
-      _counter++;
+      this.manageCombobox.manageCombo.aguardarCarregamento= true;
+     
+      
     });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    
+     
+    
     return MaterialApp( 
     
     theme: ThemeData(
@@ -57,7 +64,8 @@ class _CalcularState extends State<Calcular> {
                 this.manageCombobox,
             SingleChildScrollView(
               child: Center(
-                  child: GestureDetector(
+                  child:
+                  GestureDetector(
                       onTap: () {
                         if (this
                                 .manageCombobox
@@ -75,7 +83,7 @@ class _CalcularState extends State<Calcular> {
                                       )));
                         }
                       },
-                      child: Container(
+                      child:Container(
                         width: 200,
                         height: 50,
                         margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 7.0),
@@ -91,7 +99,8 @@ class _CalcularState extends State<Calcular> {
                         decoration: BoxDecoration(
                             color: Colors.blue[700],
                             borderRadius: BorderRadius.circular(20)),
-                      ))),
+                      )
+                      )),
             )
           ],
         ),
@@ -102,5 +111,6 @@ class _CalcularState extends State<Calcular> {
         child: Icon(Icons.autorenew),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     ));
+    
   }
 }

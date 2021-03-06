@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:forrageiras/Dado.dart';
+//import 'package:forrageiras/Dado.dart';
 import 'package:forrageiras/Fazenda.dart';
 import 'package:forrageiras/Forragueira.dart';
+
+import 'domain/entities/Dado.dart';
+import 'domain/usercases/getAllData.dart';
+import 'external/datasources/ArquivoData.dart';
+import 'infra/repositores/GetDataRepositore.dart';
 
 class Manager{
   
@@ -10,19 +15,32 @@ class Manager{
   List<Map<String,List<Forragueira>>> opcoesForragueras=List();
   //List<String> forraguerasPossibilidade;
   List<List<int>> escolido= List(); 
-  Manager(){
+  /*Manager(){
 
     this.dadoEntrada =new Dado();
     inicializarListafazendas();
     inicializarListaForragueras();
     this.escolido.add(criaListaDeZero(dadoEntrada.orden.length));
   }
+*/
+//adicionado
+  Future<bool> CarregarDadosIniciaisManeger() async{
+    
+    IGetAllData getData = new GetAllData(new GetDataRepositore( new ArquivoData()));
+    this.dadoEntrada = await getData.getData();
+    inicializarListafazendas();
+    inicializarListaForragueras();
+    this.escolido.add(criaListaDeZero(dadoEntrada.orden.length));
+    return true;
+  }
+//fim da adoção 
 
   void inicializarListaForragueras(){
 
     this.opcoesForragueras.add(Map());
     for(int i =0;i<dadoEntrada.orden.length;i++){
       this.opcoesForragueras[0][dadoEntrada.orden[i]]=List();
+     
       addElenetosIniciaisForragueiras(this.dadoEntrada.orden[i]);   
     }
   }
@@ -38,6 +56,7 @@ class Manager{
   void addElenetosIniciaisForragueiras(String key){
     bool encontrado =false;
     int posicaoDado = dadoEntrada.orden.indexOf(key);
+    
     for(int i =0;i<this.dadoEntrada.lista.length;i++){
       
       for(int p = 0; p<this.opcoesForragueras[0][key].length;p++){
@@ -54,10 +73,13 @@ class Manager{
         this.opcoesForragueras[0][key].add(new Forragueira(key,dadoEntrada.lista[i][posicaoDado],possiveveisFazendas[0][i]));
         
       }
+      
       encontrado=false;
     
     }
   }
+
+  
   void atulizarSistema(Forragueira entrada){
     
     atualizarListfazenda(entrada.fazendas);

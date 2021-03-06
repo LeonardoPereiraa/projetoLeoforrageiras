@@ -7,6 +7,7 @@ import 'package:forrageiras/SistemaCombobox.dart';
 class ManageCombobox extends StatefulWidget {
   ManageCombobox({Key key}) : super(key: key);
   ManageComboboxState manageCombo;
+  
 
   @override
   ManageComboboxState createState() { 
@@ -22,46 +23,94 @@ class ManageComboboxState extends State<ManageCombobox> {
   int quantidadeDeItem;
   Manager dadosManager;
   List<SistemaCombobox> meuCombobox ;
+  bool aguardarCarregamento = true;
 
-
-  ManageComboboxState(){
+  
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
     quantidadeJaEscolida= 0;
     meuCombobox = List();
-    dadosManager = new Manager();
-
-    this.quantidadeDeItem=dadosManager.dadoEntrada.orden.length -1;
-    for (int i=0; i<quantidadeDeItem; i=i+1){
-      String nome = dadosManager.dadoEntrada.orden[i];
-      meuCombobox.add(SistemaCombobox(this,dadosManager.opcoesForragueras[0][nome],nome));
-    }
+    this.quantidadeDeItem = 0;
+    this.dadosManager = new Manager();
+    
+    this.dadosManager.CarregarDadosIniciaisManeger().then((onValue){
+   
+    if(onValue){
+      setState(() {
+        
+        
+        this.quantidadeDeItem=dadosManager.dadoEntrada.orden.length -1;
+         
+        //print(this.quantidadeDeItem);
+          for (int i=0; i<quantidadeDeItem; i=i+1){
+            String nome = dadosManager.dadoEntrada.orden[i];
+          meuCombobox.add(SistemaCombobox(this,dadosManager.opcoesForragueras[0][nome],nome));
+        }
+        this.aguardarCarregamento=false;
+      });
+      }
+    });
+  
   }
-  void SReset(){
-    setState(() {
+
+
+void SReset() {
+   setState(() {
       
     
     this.quantidadeJaEscolida= 0;
     this.meuCombobox = List();
-    this.dadosManager = new Manager();
+    
+    
+      
+      this.dadosManager = new Manager();
+      this.dadosManager.CarregarDadosIniciaisManeger().then((onValue){
+      this.quantidadeDeItem = 0;
+   
+      if(onValue){
+      setState(() {
+        
+        print("ooooooooooooooooooooooooooooooooooooooooooooooooooo");
+        this.quantidadeDeItem=dadosManager.dadoEntrada.orden.length -1;
+        print(this.quantidadeDeItem);
+          for (int i=0; i<quantidadeDeItem; i=i+1){
+            String nome = dadosManager.dadoEntrada.orden[i];
+          meuCombobox.add(SistemaCombobox(this,dadosManager.opcoesForragueras[0][nome],nome));
+        }
+        this.aguardarCarregamento=false;
+      });
+      }
+    });
+    
 
-    this.quantidadeDeItem=dadosManager.dadoEntrada.orden.length -1;
-    for (int i=0; i<quantidadeDeItem; i=i+1){
-      String nome = dadosManager.dadoEntrada.orden[i];
-      meuCombobox.add(SistemaCombobox(this,dadosManager.opcoesForragueras[0][nome],nome));
-    }
-    this.quantidadeJaEscolida= 0;
     });
   }
 
 
-
   @override
   Widget build(BuildContext context) {
+    try{
+    if(this.quantidadeDeItem > 0 && !this.aguardarCarregamento){
     return Flexible(
         child: new ListView.builder(
             padding: const EdgeInsets.only(left: 60.0 , top: 15.0 ,right: 60.0 , bottom: 15.0),
             itemCount: this.quantidadeDeItem, itemBuilder: (BuildContext context, int index) {
               return meuCombobox[index].menuDropdonw(); 
             }));
+    }
+    else{
+      return Center(
+                
+              );
+      
+    }
+    }catch(e){
+        return Center(
+                
+              );
+      }
   }
 
   
